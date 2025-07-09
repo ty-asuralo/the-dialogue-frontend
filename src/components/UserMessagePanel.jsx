@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import userAvatar from '../assets/u-david.png';
 
-const UserMessagePanel = ({ conversation }) => {
+const UserMessagePanel = ({ conversation, mode, fontSize }) => {
   const latestMessage = conversation.length > 0 ? conversation[conversation.length - 1].text : '';
   return (
     <div className="panel-row user-panel-row">
@@ -15,7 +15,7 @@ const UserMessagePanel = ({ conversation }) => {
         </div>
       </div>
       <div className="user-message-panel">
-        <div className="user-message-content">
+        <div className={`user-message-content${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}>
           {latestMessage && (
             <span className="user-message-text">{latestMessage}</span>
           )}

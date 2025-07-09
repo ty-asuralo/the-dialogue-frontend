@@ -4,7 +4,7 @@ import aiAvatar from '../assets/p-nietzsche-calm.png';
 
 const SCROLL_LINE_PX = 18; // Approximate line height for pixel font
 
-const AiResponsePanel = ({ aiResponse }) => {
+const AiResponsePanel = ({ aiResponse, mode, fontSize }) => {
   const messageRef = useRef(null);
   const responseContentRef = useRef(null);
   const [showArrowDown, setShowArrowDown] = useState(false);
@@ -69,7 +69,7 @@ const AiResponsePanel = ({ aiResponse }) => {
           tabIndex={0}
         >
           <div
-            className="ai-message"
+            className={`ai-message${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}
             ref={messageRef}
           >
             <p>{aiResponse}</p>

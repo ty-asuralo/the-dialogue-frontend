@@ -1,10 +1,11 @@
 import React from 'react';
 import '../App.css';
 
-const ConversationInput = ({ userInput, setUserInput, handleSendMessage, quickPills, handlePillClick, handleKeyPress }) => (
-  <div className="input-area">
-    <div className="input-container">
+const ConversationInput = ({ userInput, setUserInput, handleSendMessage, quickPills, handlePillClick, handleKeyPress, mode, fontSize }) => (
+  <div className={`input-area${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}>
+    <div className={`input-container${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}>
       <textarea
+        className={`${mode === 'read' ? 'read-friendly-font' : ''} font-size-${fontSize}`}
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
         onKeyPress={handleKeyPress}
