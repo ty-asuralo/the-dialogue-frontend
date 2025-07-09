@@ -1,0 +1,543 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body, .dialogue-game, .ai-response-panel, .user-conversation-panel, .input-area, .input-container textarea, .send-button, .pill, .user-message, .ai-message {
+  font-family: 'Press Start 2P', monospace !important;
+}
+
+body {
+  background: #b8c0c8;
+}
+
+.dialogue-game {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ai-response-panel, .user-conversation-panel, .input-area {
+  background: #fff;
+  border: 4px solid #222;
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ai-response-panel {
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: 450px;
+  max-height: 470px;
+  align-items: stretch;
+}
+
+.response-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+.response-content .scroll-arrow-btn.scroll-arrow-down {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
+  font-size: 18px;
+  color: #3a5ba0;
+  font-family: 'Press Start 2P', monospace;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  text-shadow: 1px 1px 0 #fff, 2px 2px 0 #222;
+  outline: none;
+  z-index: 2;
+}
+
+.response-content .scroll-arrow-btn.scroll-arrow-up {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 18px;
+  color: #3a5ba0;
+  font-family: 'Press Start 2P', monospace;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  text-shadow: 1px 1px 0 #fff, 2px 2px 0 #222;
+  outline: none;
+  z-index: 2;
+}
+
+.ai-message {
+  background: #e0e8f0;
+  color: #222;
+  padding: 32px 12px 32px 12px; /* extra top and bottom padding for arrows */
+  border: 3px solid #3a5ba0;
+  border-radius: 0;
+  font-size: 12px;
+  box-shadow: none;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  scrollbar-width: none; /* Firefox */
+  box-sizing: border-box;
+}
+
+.ai-message::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.ai-message p {
+  font-size: 12px;
+  margin: 0;
+}
+
+.ai-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+}
+
+.avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.user-conversation-panel {
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow-y: auto;
+  min-height: 120px;
+  max-height: 140px;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 48px;
+}
+
+.user-avatar .avatar-circle {
+  background: #ffe0e0;
+  border: 3px solid #a03a3a;
+}
+
+.conversation-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.user-message {
+  background: #ffe0e0;
+  color: #222;
+  padding: 8px 12px;
+  border: 3px solid #a03a3a;
+  border-radius: 0;
+  font-size: 12px;
+  align-self: flex-end;
+  max-width: 80%;
+  box-shadow: none;
+}
+
+.user-message p {
+  font-size: 12px;
+  margin: 0 0 4px 0;
+}
+
+.timestamp {
+  font-size: 8px;
+  opacity: 0.7;
+  display: block;
+}
+
+.input-area {
+  flex: 0 0 110px;
+  background: #fff;
+  border: 4px solid #222;
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.input-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input-container textarea {
+  flex: 1;
+  padding: 8px;
+  border: 3px solid #3a5ba0;
+  border-radius: 0;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  resize: none;
+  outline: none;
+  background: #e0e8f0;
+  color: #222;
+  box-shadow: none;
+  transition: none;
+}
+
+.input-container textarea:focus {
+  border-color: #a03a3a;
+  box-shadow: none;
+}
+
+.send-button {
+  padding: 8px 16px;
+  background: #ffe066;
+  color: #222;
+  border: 3px solid #a08c3a;
+  border-radius: 0;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: none;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pills-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 6px 10px;
+  background: #e0e8f0;
+  color: #3a5ba0;
+  border: 3px solid #3a5ba0;
+  border-radius: 0;
+  font-size: 10px;
+  font-family: 'Press Start 2P', monospace;
+  cursor: pointer;
+  transition: none;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.pill:hover {
+  background: #ffe066;
+  color: #a03a3a;
+  border-color: #a03a3a;
+}
+
+/* Scrollbar styling */
+.conversation-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.conversation-content::-webkit-scrollbar-track {
+  background: #b8c0c8;
+  border-radius: 0;
+}
+
+.conversation-content::-webkit-scrollbar-thumb {
+  background: #3a5ba0;
+  border-radius: 0;
+}
+
+.conversation-content::-webkit-scrollbar-thumb:hover {
+  background: #a03a3a;
+}
+
+.panel-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 8px;
+}
+
+.avatar-outer {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-panel-row {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.user-panel-row {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* Override avatar-circle for larger size */
+.avatar-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 0;
+  background: #e0e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.panel-row.user-panel-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.avatar-outer.user-avatar-outer {
+  width: 144px;
+  height: 144px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 144px;
+}
+
+.panel-row.ai-panel-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.avatar-outer.ai-avatar-outer {
+  width: 144px;
+  height: 144px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 144px;
+}
+
+.ai-response-panel {
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: 450px;
+  max-height: 470px;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .dialogue-game {
+    padding: 4px;
+    gap: 4px;
+  }
+  .ai-response-panel,
+  .user-conversation-panel,
+  .input-area {
+    padding: 6px;
+  }
+  .avatar-circle {
+    width: 96px;
+    height: 96px;
+    font-size: 14px;
+  }
+  .ai-message p, .user-message p {
+    font-size: 8px;
+  }
+  .pills-container {
+    gap: 4px;
+  }
+  .pill {
+    font-size: 8px;
+    padding: 4px 6px;
+  }
+  .avatar-outer {
+    width: 96px;
+    height: 96px;
+  }
+  .ai-response-panel {
+    min-height: 200px;
+    max-height: 220px;
+    flex: 1;
+  }
+  .user-conversation-panel {
+    min-height: 80px;
+    max-height: 100px;
+    flex: 1;
+  }
+  .input-area {
+    flex: 0 0 80px;
+  }
+  .ai-message {
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
+/* Remove avatar from inside the panel */
+.ai-response-panel .ai-avatar,
+.user-conversation-panel .user-avatar {
+  display: none !important;
+}
+
+.user-message-panel {
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: none;
+  padding: 32px 12px 32px 12px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-radius: 0;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-start;
+  min-height: 120px;
+  max-height: 140px;
+}
+
+.user-message-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.user-message-text {
+  font-size: 14px;
+  color: #222;
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.3;
+  word-break: break-word;
+  width: 100%;
+  flex: 1 1 auto;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-message-content::-webkit-scrollbar,
+.user-message-text::-webkit-scrollbar {
+  display: initial;
+}
+
+.user-message-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-message-content::-webkit-scrollbar-track {
+  background: #b8c0c8;
+  border-radius: 0;
+}
+
+.user-message-content::-webkit-scrollbar-thumb {
+  background: #3a5ba0;
+  border-radius: 0;
+}
+
+.user-message-content::-webkit-scrollbar-thumb:hover {
+  background: #a03a3a;
+}
+
+.user-message-content {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #3a5ba0 #b8c0c8; /* Firefox */
+}
+
+.avatar-name {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  margin-top: 4px;
+  color: #222;
+  width: 100%;
+  letter-spacing: 1px;
+}
+
+.user-avatar-name {
+  color: #a03a3a;
+}
+
+.ai-avatar-name {
+  color: #3a5ba0;
+}
+
+.avatar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+
