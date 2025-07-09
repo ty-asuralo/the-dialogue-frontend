@@ -55,3 +55,7 @@ npm run lint
 
 ## License
 This project is for educational and demonstration purposes.
+
+## Screenshot
+
+![UI Screenshot](screenshots/ui-screenshot.png)
