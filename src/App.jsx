@@ -5,12 +5,18 @@ import UserMessagePanel from './components/UserMessagePanel';
 import ConversationInput from './components/ConversationInput';
 import Sidebar from './components/Sidebar';
 
-const longTestResponse = `Welcome to the world of philosophy! This is a long test message to help you check the classic 16-bit scroll arrow.\n\nIn the ancient world, philosophers pondered the nature of existence, reality, and knowledge. From Socrates to Nietzsche, the dialogue continues.\n\nLet us consider the following: What is the meaning of life? Is morality objective or subjective? Do we have free will, or is everything determined?\n\nAs you scroll, you should see a classic pixel arrow at the bottom right, just like in old RPGs. This message is intentionally verbose to ensure it exceeds the visible area of the AI response box.\n\nKeep scrolling to see more! Philosophy is a journey, not a destination.\n\nThe arrow should disappear when you reach the end of this message. Enjoy testing!\n\n---\n\nNow, let's add even more text to ensure you can test the up and down arrows thoroughly.\n\nPhilosophy is not just about asking questions, but also about seeking answers, however elusive they may be.\n\nConsider the paradoxes of Zeno, the allegory of Plato's cave, and the categorical imperative of Kant.\n\nWhat is truth? What is beauty? What is justice?\n\nScroll down to reveal more lines.\n\nThe unexamined life is not worth living.\n\nTo be is to do. To do is to be. Do be do be do.\n\nEvery new line you see is another opportunity to test the scroll arrows.\n\nKeep going!\n\nAre you still scrolling?\n\nAlmost there...\n\nThis is the end of the test message. If you can see this, the scroll arrows are working perfectly!`;
+const API_URL = "http://localhost:8000/chat";
+
+const defaultAiResponse = `Greetings, seeker of wisdom. I am Friedrich Nietzsche, philosopher of the will to power and eternal recurrence. 
+
+What profound questions stir within your soul today? Let us engage in a dialogue that challenges assumptions and awakens deeper understanding.
+
+Ask me anything about existence, morality, truth, or the human condition. I speak not to comfort, but to provoke thought and illuminate the path of self-overcoming.`;
 
 function App() {
   const [userInput, setUserInput] = useState('');
   const [conversation, setConversation] = useState([]);
-  const [aiResponse, setAiResponse] = useState(longTestResponse);
+  const [aiResponse, setAiResponse] = useState(defaultAiResponse);
   const [mode, setMode] = useState('classical');
   const [fontSize, setFontSize] = useState('mid');
 
@@ -21,7 +27,7 @@ function App() {
     'Is morality objective?'
   ];
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (userInput.trim()) {
       const newMessage = {
         id: Date.now(),
@@ -31,10 +37,52 @@ function App() {
       };
       setConversation([...conversation, newMessage]);
       setUserInput('');
-      // Simulate AI response
-      setTimeout(() => {
-        setAiResponse(longTestResponse);
-      }, 1000);
+      setAiResponse(''); // Clear previous response for streaming
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: userInput,
+            userId: 'david' // Use 'david' as the default user ID
+          })
+        });
+
+        if (!response.body) {
+          setAiResponse('Sorry, streaming is not supported by your browser.');
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let done = false;
+        let fullText = '';
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            const chunk = decoder.decode(value, { stream: true });
+            // Parse Server-Sent Events (SSE) format: lines starting with "data: "
+            chunk.split('\n').forEach(line => {
+              if (line.startsWith('data: ')) {
+                const token = line.replace('data: ', '');
+                if (token === '[END]') return;
+                if (token.startsWith('[ERROR]')) {
+                  setAiResponse(token);
+                  done = true;
+                  return;
+                }
+                fullText += token;
+                setAiResponse(prev => prev + token);
+              }
+            });
+          }
+        }
+      } catch (error) {
+        setAiResponse('Sorry, there was an error connecting to the AI service.');
+      }
     }
   };
 
