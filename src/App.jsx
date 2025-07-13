@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 import AiResponsePanel from './components/AiResponsePanel';
 import UserMessagePanel from './components/UserMessagePanel';
@@ -26,12 +26,18 @@ function App() {
   ]);
   const [mode, setMode] = useState('classical');
   const [fontSize, setFontSize] = useState('mid');
+  const [pillsAnimating, setPillsAnimating] = useState(false);
+  const animationTimeout = useRef(null);
 
   const handleSendMessage = async () => {
     console.log('handleSendMessage called, isLoading:', isLoading, 'userInput:', userInput.trim());
     if (userInput.trim() && !isLoading) {
       console.log('Setting isLoading to true');
       setIsLoading(true);
+      
+      // Fade out options immediately when user clicks send
+      setPillsAnimating(true);
+      
       const newMessage = {
         id: Date.now(),
         text: userInput,
@@ -91,7 +97,10 @@ function App() {
                       console.log('Option chunk:', data.content);
                       newOptions.push(data.content);
                       if (newOptions.length === 4) {
-                        setQuickPills(newOptions);
+                        setTimeout(() => {
+                          setQuickPills(newOptions);
+                          setPillsAnimating(false);
+                        }, 250); // 250ms fade out, then fade in
                       }
                       break;
                     case 'end':
@@ -151,6 +160,7 @@ function App() {
           mode={mode}
           fontSize={fontSize}
           isLoading={isLoading}
+          pillsAnimating={pillsAnimating}
         />
       </div>
     </div>

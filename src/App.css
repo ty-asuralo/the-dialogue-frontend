@@ -310,6 +310,10 @@ body {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  transition: opacity 0.25s;
+}
+.pills-container.pills-animating {
+  opacity: 0;
 }
 
 .pill {
