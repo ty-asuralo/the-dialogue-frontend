@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-const ConversationInput = ({ userInput, setUserInput, handleSendMessage, quickPills, handlePillClick, handleKeyPress, mode, fontSize }) => (
+const ConversationInput = ({ userInput, setUserInput, handleSendMessage, quickPills, handlePillClick, handleKeyPress, mode, fontSize, isLoading }) => (
   <div className={`input-area${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}>
     <div className={`input-container${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}>
       <textarea
@@ -15,9 +15,9 @@ const ConversationInput = ({ userInput, setUserInput, handleSendMessage, quickPi
       <button
         className="send-button"
         onClick={handleSendMessage}
-        disabled={!userInput.trim()}
+        disabled={!userInput.trim() || isLoading}
       >
-        Send
+        {isLoading ? 'Sending...' : 'Send'}
       </button>
     </div>
     <div className="pills-container">

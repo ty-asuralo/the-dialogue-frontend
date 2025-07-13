@@ -4,7 +4,7 @@ import aiAvatar from '../assets/p-nietzsche-calm.png';
 
 const SCROLL_LINE_PX = 18; // Approximate line height for pixel font
 
-const AiResponsePanel = ({ aiResponse, mode, fontSize }) => {
+const AiResponsePanel = ({ aiResponse, isLoading, mode, fontSize }) => {
   const messageRef = useRef(null);
   const responseContentRef = useRef(null);
   const [showArrowDown, setShowArrowDown] = useState(false);
@@ -72,7 +72,15 @@ const AiResponsePanel = ({ aiResponse, mode, fontSize }) => {
             className={`ai-message${mode === 'read' ? ' read-friendly-font' : ''} font-size-${fontSize}`}
             ref={messageRef}
           >
-            <p>{aiResponse}</p>
+            {isLoading && !aiResponse && (
+              <div className="ai-loading">
+                <p>Nietzsche is contemplating your question...</p>
+                <div className="loading-dots">
+                  <span>.</span><span>.</span><span>.</span>
+                </div>
+              </div>
+            )}
+            {aiResponse && <p>{aiResponse}</p>}
           </div>
           {showArrowDown && (
             <button
