@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixel+Operator&display=swap');
 
 body, .dialogue-game, .ai-response-panel, .user-conversation-panel, .input-area, .input-container textarea, .send-button, .pill, .user-message, .ai-message {
   font-family: 'Press Start 2P', monospace !important;
@@ -260,6 +261,19 @@ body {
   box-shadow: none;
 }
 
+/* Adjust input area height for different font sizes */
+.font-size-small .input-area {
+  flex: 0 0 100px;
+}
+
+.font-size-mid .input-area {
+  flex: 0 0 110px;
+}
+
+.font-size-big .input-area {
+  flex: 0 0 140px;
+}
+
 .input-container {
   display: flex;
   gap: 8px;
@@ -322,7 +336,7 @@ body {
   color: #3a5ba0;
   border: 3px solid #3a5ba0;
   border-radius: 0;
-  font-size: 10px;
+  font-size: 10px !important;
   font-family: 'Press Start 2P', monospace;
   cursor: pointer;
   transition: none;
@@ -952,7 +966,7 @@ body {
 }
 
 .read-friendly-font, .read-friendly-font * {
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important;
+  font-family: 'Pixel Operator', monospace !important;
   letter-spacing: 0.1px;
 }
 
@@ -964,6 +978,22 @@ body {
 }
 .font-size-big, .font-size-big * {
   font-size: 15px !important;
+}
+
+/* Ensure pills maintain appropriate sizing in different font modes */
+.font-size-small .pill {
+  font-size: 8px !important;
+  padding: 4px 8px;
+}
+
+.font-size-mid .pill {
+  font-size: 10px !important;
+  padding: 6px 10px;
+}
+
+.font-size-big .pill {
+  font-size: 12px !important;
+  padding: 8px 12px;
 }
 
 .sidebar-logo-img {
