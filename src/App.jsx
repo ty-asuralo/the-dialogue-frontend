@@ -7,11 +7,7 @@ import Sidebar from './components/Sidebar';
 
 const API_URL = "http://localhost:8000/chat";
 
-const defaultAiResponse = `Greetings, seeker of wisdom. I am Friedrich Nietzsche, philosopher of the will to power and eternal recurrence. 
-
-What profound questions stir within your soul today? Let us engage in a dialogue that challenges assumptions and awakens deeper understanding.
-
-Ask me anything about existence, morality, truth, or the human condition. I speak not to comfort, but to provoke thought and illuminate the path of self-overcoming.`;
+const defaultAiResponse = `So, you arrive—one more soul adrift in the age of comfort and illusion. I am Friedrich Nietzsche, the hammer of idols and the herald of becoming. You seek meaning? Then abandon certainty. Truth? Then prepare for fire. Speak, and I shall not teach—but tear away the veil, so you might see what dances in the abyss.`;
 
 function App() {
   const [userInput, setUserInput] = useState('');
@@ -28,6 +24,7 @@ function App() {
   const [fontSize, setFontSize] = useState('mid');
   const [pillsAnimating, setPillsAnimating] = useState(false);
   const animationTimeout = useRef(null);
+  const newOptionsRef = useRef([]); // <-- Add this line
 
   const handleSendMessage = async () => {
     console.log('handleSendMessage called, isLoading:', isLoading, 'userInput:', userInput.trim());
@@ -37,6 +34,9 @@ function App() {
       
       // Fade out options immediately when user clicks send
       setPillsAnimating(true);
+      if (animationTimeout.current) clearTimeout(animationTimeout.current);
+      newOptionsRef.current = [];
+      setQuickPills([]); // <-- Clear pills after send
       
       const newMessage = {
         id: Date.now(),
@@ -68,7 +68,6 @@ function App() {
         const decoder = new TextDecoder('utf-8');
         let done = false;
         let currentResponse = '';
-        let newOptions = [];
         let timeoutId = setTimeout(() => {
           console.log('Stream timeout - ending connection');
           done = true;
@@ -95,12 +94,15 @@ function App() {
                       break;
                     case 'option':
                       console.log('Option chunk:', data.content);
-                      newOptions.push(data.content);
-                      if (newOptions.length === 4) {
-                        setTimeout(() => {
-                          setQuickPills(newOptions);
+                      newOptionsRef.current.push(data.content);
+                      console.log('Current options array:', newOptionsRef.current);
+                      // Fallback: show pills if at least 1 option is received (for debugging)
+                      if (newOptionsRef.current.length === 4) {
+                        animationTimeout.current = setTimeout(() => {
+                          setQuickPills([...newOptionsRef.current]);
                           setPillsAnimating(false);
-                        }, 250); // 250ms fade out, then fade in
+                          console.log('Set quick pills:', newOptionsRef.current);
+                        }, 250);
                       }
                       break;
                     case 'end':

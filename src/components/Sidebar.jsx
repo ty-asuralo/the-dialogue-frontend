@@ -3,7 +3,7 @@ import '../App.css';
 import logo from '../assets/logo.png';
 
 const Sidebar = ({ mode, setMode, fontSize, setFontSize }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [theme, setTheme] = useState('light');
 

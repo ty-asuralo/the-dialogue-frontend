@@ -15,7 +15,9 @@ body {
   flex-direction: column;
   padding: 8px;
   gap: 8px;
-  max-width: 1000px;
+  width: 800px;
+  max-width: 800px;
+  min-width: 800px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -39,6 +41,9 @@ body {
   min-height: 400px;
   max-height: 450px;
   align-items: stretch;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 .response-content {
@@ -259,6 +264,9 @@ body {
   gap: 8px;
   border-radius: 0;
   box-shadow: none;
+  width: calc(100% + 144px + 24px);
+  min-width: calc(100% + 144px + 24px);
+  max-width: calc(100% + 144px + 24px);
 }
 
 /* Adjust input area height for different font sizes */
@@ -375,6 +383,8 @@ body {
   gap: 24px;
   margin-bottom: 8px;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 .avatar-outer {
@@ -441,7 +451,7 @@ body {
   gap: 24px;
   margin-bottom: 8px;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .avatar-outer.ai-avatar-outer {
@@ -451,6 +461,29 @@ body {
   align-items: center;
   justify-content: center;
   flex: 0 0 144px;
+}
+
+.panel-row.input-panel-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.avatar-outer.input-avatar-outer {
+  width: 0px;
+  height: 144px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 0px;
+  visibility: hidden;
+}
+
+.avatar-name.input-avatar-name {
+  visibility: hidden;
 }
 
 .ai-response-panel {
@@ -466,6 +499,9 @@ body {
   .dialogue-game {
     padding: 4px;
     gap: 4px;
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 100vw;
   }
   .ai-response-panel,
   .user-conversation-panel,
@@ -531,6 +567,9 @@ body {
   justify-content: flex-start;
   min-height: 120px;
   max-height: 140px;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 .user-message-content {
