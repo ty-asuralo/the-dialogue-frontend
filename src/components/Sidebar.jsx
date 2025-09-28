@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import logo from '../assets/logo.png';
 
-const Sidebar = ({ mode, setMode, fontSize, setFontSize }) => {
+const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhilosopher, currentPage }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [theme, setTheme] = useState('light');
@@ -27,6 +27,17 @@ const Sidebar = ({ mode, setMode, fontSize, setFontSize }) => {
           </div>
           <div className="sidebar-divider" />
           <div className="sidebar-content">
+            {onBack && (
+              <button className="sidebar-back-btn" onClick={onBack}>
+                {currentPage === 'philosopher-selection' ? '← Exit Game' : '← Back to Selection'}
+              </button>
+            )}
+            {selectedPhilosopher && (
+              <div className="sidebar-philosopher-info">
+                <h3>Current Philosopher</h3>
+                <p>{selectedPhilosopher.name}</p>
+              </div>
+            )}
             <button className="sidebar-settings-btn" onClick={() => setShowModal(true)}>
               ⚙️ Settings
             </button>
