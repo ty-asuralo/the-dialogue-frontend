@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../App.css';
 import logo from '../assets/logo.png';
 
@@ -37,6 +37,12 @@ const WelcomePage = () => {
           >
             Contact Us
           </button>
+        </div>
+        
+        <div className="welcome-auth-links">
+          <Link to="/login" className="auth-link">Sign In</Link>
+          <span>•</span>
+          <Link to="/register" className="auth-link">Sign Up</Link>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import '../App.css';
 import nietzscheAvatar from '../assets/p-nietzsche-calm.png';
 import Sidebar from '../components/Sidebar';
 
-const PhilosopherSelectionPage = ({ onSelectPhilosopher }) => {
+const PhilosopherSelectionPage = ({ onSelectPhilosopher, user, onLogout }) => {
   const navigate = useNavigate();
   const [mode, setMode] = useState('classical');
   const [fontSize, setFontSize] = useState('mid');
@@ -52,6 +52,8 @@ const PhilosopherSelectionPage = ({ onSelectPhilosopher }) => {
         setFontSize={setFontSize}
         onBack={handleBack}
         currentPage="philosopher-selection"
+        user={user}
+        onLogout={onLogout}
       />
       <div className="philosopher-selection-page">
         <div className="philosopher-selection-content">

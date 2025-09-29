@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import logo from '../assets/logo.png';
 
-const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhilosopher, currentPage }) => {
+const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhilosopher, currentPage, user, onLogout }) => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [theme, setTheme] = useState('light');
@@ -38,9 +40,41 @@ const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhiloso
                 <p>{selectedPhilosopher.name}</p>
               </div>
             )}
+            {user && (
+              <div className="sidebar-user-info">
+                <div className="user-avatar-small">
+                  {user.avatar_url ? (
+                    <img src={user.avatar_url} alt="User Avatar" />
+                  ) : (
+                    <span>{user.username ? user.username[0].toUpperCase() : user.email[0].toUpperCase()}</span>
+                  )}
+                </div>
+                <div className="user-details">
+                  <p className="user-name">{user.full_name || user.username || user.email}</p>
+                  <p className="user-email">{user.email}</p>
+                </div>
+              </div>
+            )}
+            
+            <button 
+              className="sidebar-profile-btn"
+              onClick={() => navigate('/profile')}
+            >
+              👤 Profile
+            </button>
+            
             <button className="sidebar-settings-btn" onClick={() => setShowModal(true)}>
               ⚙️ Settings
             </button>
+            
+            {onLogout && (
+              <button 
+                className="sidebar-logout-btn"
+                onClick={onLogout}
+              >
+                🚪 Logout
+              </button>
+            )}
           </div>
         </>
       )}

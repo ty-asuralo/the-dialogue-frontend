@@ -10,7 +10,7 @@ const API_URL = "http://localhost:8000/chat";
 
 const defaultAiResponse = `So, you arrive—one more soul adrift in the age of comfort and illusion. I am Friedrich Nietzsche, the hammer of idols and the herald of becoming. You seek meaning? Then abandon certainty. Truth? Then prepare for fire. Speak, and I shall not teach—but tear away the veil, so you might see what dances in the abyss.`;
 
-const DialoguePage = ({ selectedPhilosopher }) => {
+const DialoguePage = ({ selectedPhilosopher, user, onLogout }) => {
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState('');
   const [conversation, setConversation] = useState([]);
@@ -162,6 +162,8 @@ const DialoguePage = ({ selectedPhilosopher }) => {
         onBack={handleBackToSelection}
         selectedPhilosopher={selectedPhilosopher}
         currentPage="dialogue"
+        user={user}
+        onLogout={onLogout}
       />
       <div className="dialogue-game">
         <AiResponsePanel aiResponse={aiResponse} isLoading={isLoading} mode={mode} fontSize={fontSize} />
