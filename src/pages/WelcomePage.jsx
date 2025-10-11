@@ -1,18 +1,41 @@
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import logo from '../assets/logo.png';
+import LoginModal from '../components/LoginModal';
 
-const WelcomePage = () => {
+const WelcomePage = ({ onLogin }) => {
   const navigate = useNavigate();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleEnterGame = () => {
-    navigate('/philosophers');
+    setShowLoginModal(true);
   };
 
   const handleContactUs = () => {
     // For now, just open a mailto link
     window.open('mailto:contact@philosopher.com?subject=Contact from Philosopher App', '_blank');
+  };
+
+  const handleLogin = (userData) => {
+    // Store user data and navigate to philosophers
+    localStorage.setItem('user', JSON.stringify(userData));
+    onLogin(userData);  // Update App state
+    navigate('/philosophers');
+  };
+
+  const handleSignUp = (userData) => {
+    // Store user data and navigate to philosophers
+    localStorage.setItem('user', JSON.stringify(userData));
+    onLogin(userData);  // Update App state
+    navigate('/philosophers');
+  };
+
+  const handleGuestContinue = (guestUser) => {
+    // Store guest user data and navigate to philosophers
+    localStorage.setItem('user', JSON.stringify(guestUser));
+    onLogin(guestUser);  // Update App state
+    navigate('/philosophers');
   };
 
   return (
@@ -39,12 +62,15 @@ const WelcomePage = () => {
           </button>
         </div>
         
-        <div className="welcome-auth-links">
-          <Link to="/login" className="auth-link">Sign In</Link>
-          <span>•</span>
-          <Link to="/register" className="auth-link">Sign Up</Link>
-        </div>
       </div>
+      
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLogin={handleLogin}
+        onSignUp={handleSignUp}
+        onGuestContinue={handleGuestContinue}
+      />
     </div>
   );
 };

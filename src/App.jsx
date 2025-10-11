@@ -12,29 +12,9 @@ function App() {
   const [selectedPhilosopher, setSelectedPhilosopher] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Development mode - set to true to bypass authentication
-  const DEV_MODE = true;
 
   // Check for existing authentication on app load
   useEffect(() => {
-    if (DEV_MODE) {
-      // Create a mock user for development
-      const mockUser = {
-        id: 1,
-        email: 'dev@example.com',
-        username: 'developer',
-        full_name: 'Development User',
-        avatar_url: null,
-        is_active: true,
-        is_verified: true,
-        created_at: new Date().toISOString()
-      };
-      setUser(mockUser);
-      setIsLoading(false);
-      return;
-    }
-    
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
     
@@ -71,8 +51,8 @@ function App() {
       return <div>Loading...</div>;
     }
     
-    if (!DEV_MODE && !user) {
-      return <Navigate to="/login" replace />;
+    if (!user) {
+      return <Navigate to="/" replace />;
     }
     
     return children;
@@ -84,7 +64,7 @@ function App() {
       return <div>Loading...</div>;
     }
     
-    if (!DEV_MODE && user) {
+    if (user) {
       return <Navigate to="/philosophers" replace />;
     }
     
@@ -97,7 +77,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<WelcomePage />} />
+      <Route path="/" element={<WelcomePage onLogin={handleLogin} />} />
       
       {/* Authentication routes - only accessible when not logged in */}
       <Route 
