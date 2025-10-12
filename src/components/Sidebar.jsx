@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import logo from '../assets/logo.png';
+import ProfileModal from './ProfileModal';
 
 const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhilosopher, currentPage, user, onLogout }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [theme, setTheme] = useState('light');
 
   const handleThemeToggle = () => {
@@ -31,7 +33,7 @@ const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhiloso
           <div className="sidebar-content">
             {onBack && (
               <button className="sidebar-back-btn" onClick={onBack}>
-                {currentPage === 'philosopher-selection' ? '← Exit Game' : '← Back to Selection'}
+                {currentPage === 'philosopher-selection' ? '← Home' : '← Back to Selection'}
               </button>
             )}
             {selectedPhilosopher && (
@@ -50,20 +52,20 @@ const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhiloso
                   )}
                 </div>
                 <div className="user-details">
-                  <p className="user-name">{user.full_name || user.username || user.email}</p>
-                  <p className="user-email">{user.email}</p>
+                  <p className="user-type">{user.is_guest ? "Guest" : "User"}</p>
+                  <p className="user-identifier">{user.is_guest ? user.username : (user.full_name || user.username || user.email)}</p>
                 </div>
               </div>
             )}
             
             <button 
               className="sidebar-profile-btn"
-              onClick={() => navigate('/profile')}
+              onClick={() => setShowProfileModal(true)}
             >
               👤 Profile
             </button>
             
-            <button className="sidebar-settings-btn" onClick={() => setShowModal(true)}>
+            <button className="sidebar-settings-btn" onClick={() => setShowSettingsModal(true)}>
               ⚙️ Settings
             </button>
             
@@ -78,12 +80,19 @@ const Sidebar = ({ mode, setMode, fontSize, setFontSize, onBack, selectedPhiloso
           </div>
         </>
       )}
-      {showModal && (
-        <div className="sidebar-modal-overlay" onClick={() => setShowModal(false)}>
+      <ProfileModal 
+        isOpen={showProfileModal} 
+        onClose={() => setShowProfileModal(false)}
+        user={user}
+        onLogout={onLogout}
+      />
+      
+      {showSettingsModal && (
+        <div className="sidebar-modal-overlay" onClick={() => setShowSettingsModal(false)}>
           <div className="sidebar-modal" onClick={e => e.stopPropagation()}>
             <div className="sidebar-modal-header">
               <span>Settings</span>
-              <button className="sidebar-modal-close" onClick={() => setShowModal(false)}>&times;</button>
+              <button className="sidebar-modal-close" onClick={() => setShowSettingsModal(false)}>&times;</button>
             </div>
             <div className="sidebar-modal-content">
               <div className="sidebar-modal-section theme-row">

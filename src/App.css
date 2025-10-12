@@ -877,9 +877,11 @@ body {
 .user-details {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-.user-name {
+.user-type {
   font-size: 10px;
   color: #3a5ba0;
   margin: 0 0 2px 0;
@@ -888,9 +890,11 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
+  cursor: default;
 }
 
-.user-email {
+.user-identifier {
   font-size: 8px;
   color: #666;
   margin: 0;
@@ -898,7 +902,33 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
+  cursor: default;
+  transition: transform 0.3s ease;
+  width: 100%;
 }
+
+.user-details:hover .user-identifier {
+  animation: marquee-scroll-fast 8s ease-in-out infinite;
+  text-overflow: clip;
+  width: max-content;
+}
+
+@keyframes marquee-scroll-fast {
+  0%, 15% {
+    transform: translateX(0%);
+  }
+  40% {
+    transform: translateX(calc(-100% + 100px));
+  }
+  60% {
+    transform: translateX(calc(-100% + 100px));
+  }
+  85%, 100% {
+    transform: translateX(0%);
+  }
+}
+
 
 .sidebar-profile-btn {
   width: 100%;
@@ -962,6 +992,13 @@ body {
   animation: pop-in 0.2s cubic-bezier(0.4,0,0.2,1);
 }
 
+.profile-modal {
+  min-width: 450px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 @keyframes pop-in {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -1004,6 +1041,38 @@ body {
   font-size: 13px;
   font-family: 'Press Start 2P', monospace;
   color: #222;
+}
+
+.profile-modal-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8f9fa;
+  border: 2px solid #3a5ba0;
+  border-radius: 4px;
+}
+
+.profile-modal-section-title {
+  font-size: 14px;
+  color: #3a5ba0;
+  margin: 0 0 16px 0;
+  text-shadow: 1px 1px 0 #fff;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.guest-warning {
+  background: #fff3cd;
+  border: 2px solid #ffeaa7;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+.guest-warning p {
+  font-size: 10px;
+  color: #856404;
+  margin: 0;
+  line-height: 1.4;
+  font-family: 'Press Start 2P', monospace;
 }
 
 .sidebar-modal-section label {
@@ -1334,11 +1403,11 @@ body {
 .philosopher-selection-page {
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: linear-gradient(135deg, #e0e8f0 0%, #b8c0c8 100%);
   font-family: 'Press Start 2P', monospace;
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
   flex: 1;
   overflow-y: auto;
 }
@@ -1363,10 +1432,11 @@ body {
 
 .selection-header h1 {
   font-size: 28px;
-  color: #3a5ba0;
+  color: #222;
   margin: 0;
-  text-shadow: 2px 2px 0 #fff, 4px 4px 0 #222;
+  text-shadow: 2px 2px 0 #fff, 3px 3px 0 #3a5ba0;
   letter-spacing: 2px;
+  font-weight: bold;
 }
 
 .selection-header p {
@@ -1375,6 +1445,7 @@ body {
   margin: 0;
   text-shadow: 1px 1px 0 #fff;
   letter-spacing: 1px;
+  font-weight: normal;
 }
 
 .philosophers-grid {
@@ -1642,6 +1713,37 @@ body {
   font-size: 10px;
   color: #3a5ba0;
   text-shadow: 1px 1px 0 #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.expand-options-btn {
+  background: #e0e8f0;
+  border: 2px solid #3a5ba0;
+  padding: 8px 16px;
+  font-size: 10px;
+  color: #3a5ba0;
+  font-family: 'Press Start 2P', monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  box-shadow: 2px 2px 0 #fff, 4px 4px 0 #222;
+}
+
+.expand-options-btn:hover {
+  background: #ffe066;
+  color: #a03a3a;
+  border-color: #a08c3a;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #fff, 5px 5px 0 #222;
+}
+
+.expand-options-btn span {
+  font-size: 8px;
 }
 
 .social-login {
@@ -2000,9 +2102,8 @@ body {
 
 /* Guest Section Styles */
 .guest-section {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px solid #3a5ba0;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
 .guest-button-container {

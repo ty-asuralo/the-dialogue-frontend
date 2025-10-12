@@ -257,66 +257,71 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSignUp, onGuestContinue }) => 
             </form>
           )}
 
-          <div className="auth-divider">
-            <span>Or continue with</span>
-          </div>
-
-          <div className="social-login">
-            <button
-              onClick={() => handleSocialLogin('google')}
-              className="social-btn google-btn"
-            >
-              <span className="social-icon">G</span>
-              Google
-            </button>
-            
-            <button
-              onClick={() => handleSocialLogin('x')}
-              className="social-btn x-btn"
-            >
-              <span className="social-icon">𝕏</span>
-              X (Twitter)
-            </button>
-            
-            <button
-              onClick={() => handleSocialLogin('facebook')}
-              className="social-btn facebook-btn"
-            >
-              <span className="social-icon">f</span>
-              Facebook
-            </button>
-          </div>
-
-          <div className="guest-section">
-            <div className="guest-button-container">
-              <button
-                onClick={handleGuestContinue}
-                className="guest-btn"
-              >
-                Continue as Guest
-              </button>
-              <div 
-                className="info-icon"
-                onMouseEnter={() => setShowGuestTooltip(true)}
-                onMouseLeave={() => setShowGuestTooltip(false)}
-              >
-                ℹ️
-                {showGuestTooltip && (
-                  <div className="tooltip">
-                    <div className="tooltip-content">
-                      <strong>Guest Limitations:</strong>
-                      <ul>
-                        <li>Conversations are not saved</li>
-                        <li>No access to conversation history</li>
-                        <li>Limited to 3 conversations per session</li>
-                        <li>Cannot access profile features</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
+          {/* Alternative Login Options - Only show in Login mode */}
+          {!showSignUp && (
+            <>
+              <div className="auth-divider">
+                <span>Or continue with</span>
               </div>
-            </div>
-          </div>
+
+              <div className="social-login">
+                <button
+                  onClick={() => handleSocialLogin('google')}
+                  className="social-btn google-btn"
+                >
+                  <span className="social-icon">G</span>
+                  Google
+                </button>
+                
+                <button
+                  onClick={() => handleSocialLogin('x')}
+                  className="social-btn x-btn"
+                >
+                  <span className="social-icon">𝕏</span>
+                  X (Twitter)
+                </button>
+                
+                <button
+                  onClick={() => handleSocialLogin('facebook')}
+                  className="social-btn facebook-btn"
+                >
+                  <span className="social-icon">f</span>
+                  Facebook
+                </button>
+              </div>
+
+              <div className="guest-section">
+                <div className="guest-button-container">
+                  <button
+                    onClick={handleGuestContinue}
+                    className="guest-btn"
+                  >
+                    Continue as Guest
+                  </button>
+                  <div 
+                    className="info-icon"
+                    onMouseEnter={() => setShowGuestTooltip(true)}
+                    onMouseLeave={() => setShowGuestTooltip(false)}
+                  >
+                    ℹ️
+                    {showGuestTooltip && (
+                      <div className="tooltip">
+                        <div className="tooltip-content">
+                          <strong>Guest Limitations:</strong>
+                          <ul>
+                            <li>Conversations are not saved</li>
+                            <li>No access to conversation history</li>
+                            <li>Limited to 3 conversations per session</li>
+                            <li>Cannot access profile features</li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="auth-footer">
             <p>

@@ -9,7 +9,24 @@ const WelcomePage = ({ onLogin }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleEnterGame = () => {
-    setShowLoginModal(true);
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    
+    if (token && userData) {
+      // User is already logged in, go directly to philosophers
+      try {
+        const user = JSON.parse(userData);
+        onLogin(user);  // Update App state
+        navigate('/philosophers');
+      } catch (error) {
+        // If there's an error parsing, show login modal
+        setShowLoginModal(true);
+      }
+    } else {
+      // Not logged in, show login modal
+      setShowLoginModal(true);
+    }
   };
 
   const handleContactUs = () => {

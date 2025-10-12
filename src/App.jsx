@@ -6,7 +6,6 @@ import PhilosopherSelectionPage from './pages/PhilosopherSelectionPage';
 import DialoguePage from './pages/DialoguePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [selectedPhilosopher, setSelectedPhilosopher] = useState(null);
@@ -123,14 +122,6 @@ function App() {
             ) : (
               <Navigate to="/philosophers" replace />
             )}
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/profile" 
-        element={
-          <ProtectedRoute>
-            <ProfilePage user={user} onLogout={handleLogout} />
           </ProtectedRoute>
         } 
       />
